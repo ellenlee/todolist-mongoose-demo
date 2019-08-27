@@ -12,7 +12,7 @@ app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/todo', { useNewUrlParser: true, useCreateIndex: true })
 
 const db = mongoose.connection
 
@@ -25,7 +25,9 @@ db.once('open', () => {
 })
 
 app.use(session({
-  secret: 'your secret key' // secret: 定義一組自己的私鑰（字串)
+  secret: 'your secret key',
+  resave: 'false',
+  saveUninitialized: 'false'
 }))
 app.use(passport.initialize())
 app.use(passport.session())
